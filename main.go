@@ -4,7 +4,6 @@ import "fmt"
 
 func main() {
 	cards := newDeck()
-	cards.print()
-	hand, remainingCards := cards.deal(5)
-	fmt.Println(hand, "------------------------------------", remainingCards)
+	cards.saveToFile("my_cards")
+	fmt.Println(newDeckFromFile("my_cards"))
 }

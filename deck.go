@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 )
 
@@ -37,5 +38,18 @@ func (d deck) deal(handSize int) (deck, deck) {
 }
 
 func (d deck) toByteString() []byte {
-	return []byte(strings.Join(d, ""))
+	return []byte(strings.Join(d, ", "))
+}
+
+func (d deck) saveToFile(filename string) error {
+	return os.WriteFile(filename, d.toByteString(), 0666)
+}
+
+func newDeckFromFile(filename string) deck {
+	bs, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+	return strings.Split(string(bs), ", ")
 }
